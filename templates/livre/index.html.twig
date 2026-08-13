@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos livres{% endblock %}
+
+{% block body %}
+<h1>Catalogue de livres</h1>
+
+{% if livres is empty %}
+    <p>Aucun livre disponible pour le moment.</p>
+{% else %}
+    <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+        {% for livre in livres %}
+            <div style="border: 1px solid #ccc; padding: 15px; width: 220px;">
+                <h3>{{ livre.titre }}</h3>
+                <p><strong>{{ livre.auteur }}</strong></p>
+                <p>{{ livre.prix }} €</p>
+                <p>Stock : {{ livre.stock }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}
