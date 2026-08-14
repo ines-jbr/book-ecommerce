@@ -4,6 +4,7 @@
 
 {% block body %}
 <h1>Catalogue de livres</h1>
+<p><a href="{{ path('app_livre_new') }}">+ Ajouter un livre</a></p>
 
 {% if livres is empty %}
     <p>Aucun livre disponible pour le moment.</p>
