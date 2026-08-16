@@ -6,16 +6,20 @@
 <h1>Notre catalogue</h1>
 <p class="subtitle">une sélection choisie avec amour</p>
 
+<div class="search-bar">
+    <input type="text" id="search-input" placeholder="Rechercher un titre ou un auteur...">
+</div>
+
 {% if app.user %}
     <a href="{{ path('app_livre_new') }}" class="btn">+ Ajouter un livre</a>
 {% endif %}
 
 {% if livres is empty %}
-    <div class="empty-state">
+    <div class="empty-state" id="empty-state">
         <p>🌷 Aucun livre disponible pour le moment.</p>
     </div>
 {% else %}
-    <div class="book-grid">
+    <div class="book-grid" id="book-grid">
         {% for livre in livres %}
             <div class="book-card">
                 <h3>{{ livre.titre }}</h3>
@@ -32,4 +36,53 @@
         {% endfor %}
     </div>
 {% endif %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('search-input');
+        const bookGrid = document.getElementById('book-grid');
+
+        let debounceTimer;
+
+        searchInput.addEventListener('input', function () {
+            clearTimeout(debounceTimer);
+            const query = this.value;
+
+            debounceTimer = setTimeout(() => {
+                fetch(`/livres/recherche?q=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(livres => {
+                        renderBooks(livres);
+                    })
+                    .catch(error => {
+                        console.error('Erreur de recherche :', error);
+                    });
+            }, 300);
+        });
+
+        function renderBooks(livres) {
+            if (livres.length === 0) {
+                bookGrid.innerHTML = '<p style="grid-column: 1 / -1; text-align: center; color: var(--text-muted);">Aucun livre ne correspond à votre recherche.</p>';
+                return;
+            }
+
+            bookGrid.innerHTML = livres.map(livre => `
+                <div class="book-card">
+                    <h3>${escapeHtml(livre.titre)}</h3>
+                    <p class="author">${escapeHtml(livre.auteur)}</p>
+                    <p class="price">${livre.prix} €</p>
+                    <p class="stock ${livre.stock === 0 ? 'out' : ''}">
+                        ${livre.stock === 0 ? 'Rupture de stock' : livre.stock + ' en stock'}
+                    </p>
+                </div>
+            `).join('');
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    });
+</script>
 {% endblock %}
