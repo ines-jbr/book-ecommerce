@@ -34,6 +34,7 @@ h1, h2, h3 {
     color: var(--pink-deep);
 }
 
+/* Header */
 header.site-header {
     background: linear-gradient(120deg, var(--pink-deep), #A8446F 70%);
     padding: 22px 48px;
@@ -87,6 +88,7 @@ header.site-header nav a:hover::after {
     width: 100%;
 }
 
+/* Main */
 main {
     max-width: 1100px;
     margin: 0 auto;
@@ -106,6 +108,7 @@ h1 {
     margin: 0 0 32px;
 }
 
+/* Buttons */
 .btn {
     display: inline-block;
     background: linear-gradient(120deg, var(--rose-gold), #DDB98A);
@@ -127,6 +130,7 @@ h1 {
     box-shadow: 0 10px 22px rgba(201, 162, 109, 0.5);
 }
 
+/* Book grid */
 .book-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
@@ -205,6 +209,7 @@ h1 {
     font-size: 1.1rem;
 }
 
+/* Form */
 form {
     max-width: 520px;
     background: var(--card-bg);
@@ -263,6 +268,7 @@ form textarea {
     color: var(--pink-deep);
 }
 
+/* Footer */
 .site-footer {
     text-align: center;
     padding: 24px;

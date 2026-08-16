@@ -4,11 +4,13 @@
 
 {% block body %}
 <h1>Ajouter un nouveau livre</h1>
+<p class="subtitle">chaque livre mérite sa place</p>
 
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button type="submit">Enregistrer</button>
+    <button type="submit" class="btn">Enregistrer 🌸</button>
 {{ form_end(form) }}
 
-<p><a href="{{ path('app_livre_index') }}">Retour à la liste</a></p>
+<br>
+<a href="{{ path('app_livre_index') }}" class="back-link">← Retour au catalogue</a>
 {% endblock %}

@@ -1,21 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nos livres{% endblock %}
+{% block title %}Catalogue{% endblock %}
 
 {% block body %}
-<h1>Catalogue de livres</h1>
-<p><a href="{{ path('app_livre_new') }}">+ Ajouter un livre</a></p>
+<h1>Notre catalogue</h1>
+<p class="subtitle">une sélection choisie avec amour</p>
+
+<a href="{{ path('app_livre_new') }}" class="btn">+ Ajouter un livre</a>
 
 {% if livres is empty %}
-    <p>Aucun livre disponible pour le moment.</p>
+    <div class="empty-state">
+        <p>🌷 Aucun livre disponible pour le moment.</p>
+    </div>
 {% else %}
-    <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+    <div class="book-grid">
         {% for livre in livres %}
-            <div style="border: 1px solid #ccc; padding: 15px; width: 220px;">
+            <div class="book-card">
                 <h3>{{ livre.titre }}</h3>
-                <p><strong>{{ livre.auteur }}</strong></p>
-                <p>{{ livre.prix }} €</p>
-                <p>Stock : {{ livre.stock }}</p>
+                <p class="author">{{ livre.auteur }}</p>
+                <p class="price">{{ livre.prix }} €</p>
+                <p class="stock {{ livre.stock == 0 ? 'out' : '' }}">
+                    {% if livre.stock == 0 %}
+                        Rupture de stock
+                    {% else %}
+                        {{ livre.stock }} en stock
+                    {% endif %}
+                </p>
             </div>
         {% endfor %}
     </div>
