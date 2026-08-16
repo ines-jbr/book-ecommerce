@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Entity\Livre;
 use App\Form\LivreType;
@@ -28,6 +29,30 @@ class LivreController extends AbstractController
         return $this->render('livre/index.html.twig', [
             'livres' => $livres,
         ]);
+    }
+    #[Route('/livres/recherche', name: 'app_livre_search')]
+    public function search(Request $request, LivreRepository $livreRepository): JsonResponse
+    {
+        $query = $request->query->get('q', '');
+
+        $livres = $livreRepository->createQueryBuilder('l')
+            ->where('l.titre LIKE :query')
+            ->orWhere('l.auteur LIKE :query')
+            ->setParameter('query', '%' . $query . '%')
+            ->getQuery()
+            ->getResult();
+
+        $data = array_map(function ($livre) {
+            return [
+                'id' => $livre->getId(),
+                'titre' => $livre->getTitre(),
+                'auteur' => $livre->getAuteur(),
+                'prix' => $livre->getPrix(),
+                'stock' => $livre->getStock(),
+            ];
+        }, $livres);
+
+        return new JsonResponse($data);
     }
 
     #[Route('/livre/nouveau', name: 'app_livre_new')]
