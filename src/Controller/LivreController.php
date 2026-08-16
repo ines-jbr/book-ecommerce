@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Entity\Livre;
 use App\Form\LivreType;
 use App\Repository\LivreRepository;
@@ -30,6 +31,7 @@ class LivreController extends AbstractController
     }
 
     #[Route('/livre/nouveau', name: 'app_livre_new')]
+    #[IsGranted('ROLE_USER')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $livre = new Livre();

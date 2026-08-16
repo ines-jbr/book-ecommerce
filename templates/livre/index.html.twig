@@ -6,7 +6,9 @@
 <h1>Notre catalogue</h1>
 <p class="subtitle">une sélection choisie avec amour</p>
 
-<a href="{{ path('app_livre_new') }}" class="btn">+ Ajouter un livre</a>
+{% if app.user %}
+    <a href="{{ path('app_livre_new') }}" class="btn">+ Ajouter un livre</a>
+{% endif %}
 
 {% if livres is empty %}
     <div class="empty-state">
