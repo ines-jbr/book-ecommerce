@@ -37,6 +37,24 @@ class LivreController extends AbstractController
             'livre' => $livre,
         ]);
     }
+    #[Route('/livre/{id}/modifier', name: 'app_livre_edit')]
+    #[IsGranted('ROLE_USER')]
+    public function edit(Livre $livre, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(LivreType::class, $livre);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_livre_show', ['id' => $livre->getId()]);
+        }
+
+        return $this->render('livre/edit.html.twig', [
+            'form' => $form,
+            'livre' => $livre,
+        ]);
+    }
     #[Route('/livres/recherche', name: 'app_livre_search')]
     public function search(Request $request, LivreRepository $livreRepository): JsonResponse
     {
