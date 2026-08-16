@@ -20,7 +20,7 @@
         {% endif %}
     </p>
 
-    {% if app.user %}
+    {% if is_granted('ROLE_VENDEUR') %}
         <div class="actions">
             <a href="{{ path('app_livre_edit', {id: livre.id}) }}" class="btn">Modifier</a>
         </div>

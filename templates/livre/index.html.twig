@@ -10,7 +10,7 @@
     <input type="text" id="search-input" placeholder="Rechercher un titre ou un auteur...">
 </div>
 
-{% if app.user %}
+{% if is_granted('ROLE_VENDEUR') %}
     <a href="{{ path('app_livre_new') }}" class="btn">+ Ajouter un livre</a>
 {% endif %}
 

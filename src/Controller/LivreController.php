@@ -38,7 +38,7 @@ class LivreController extends AbstractController
         ]);
     }
     #[Route('/livre/{id}/modifier', name: 'app_livre_edit')]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_VENDEUR')]
     public function edit(Livre $livre, Request $request, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(LivreType::class, $livre);
@@ -81,7 +81,7 @@ class LivreController extends AbstractController
     }
 
     #[Route('/livre/nouveau', name: 'app_livre_new')]
-    #[IsGranted('ROLE_USER')]
+    #[IsGranted('ROLE_VENDEUR')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $livre = new Livre();

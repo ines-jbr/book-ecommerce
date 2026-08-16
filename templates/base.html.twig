@@ -20,13 +20,15 @@
             <nav>
                 <a href="{{ path('app_livre_index') }}">Catalogue</a>
                 {% if app.user %}
-                    <a href="{{ path('app_livre_new') }}">Ajouter un livre</a>
+                    {% if is_granted('ROLE_VENDEUR') %}
+                        <a href="{{ path('app_livre_new') }}">Ajouter un livre</a>
+                    {% endif %}
                     <a href="{{ path('app_logout') }}">Déconnexion ({{ app.user.email }})</a>
                 {% else %}
                     <a href="{{ path('app_login') }}">Connexion</a>
                     <a href="{{ path('app_register') }}">Inscription</a>
                 {% endif %}
-            </nav>
+</nav>
         </header>
         <main>
             {% block body %}{% endblock %}
