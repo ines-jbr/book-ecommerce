@@ -20,6 +20,12 @@
             <nav>
                 <a href="{{ path('app_livre_index') }}">Catalogue</a>
                 <a href="{{ path('app_livre_new') }}">Ajouter un livre</a>
+                {% if app.user %}
+                    <a href="{{ path('app_logout') }}">Déconnexion ({{ app.user.email }})</a>
+                {% else %}
+                    <a href="{{ path('app_login') }}">Connexion</a>
+                    <a href="{{ path('app_register') }}">Inscription</a>
+                {% endif %}
             </nav>
         </header>
         <main>

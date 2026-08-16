@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+<h1>Créer un compte</h1>
+<p class="subtitle">Rejoignez notre communauté de lectrices</p>
+
+{{ form_start(registrationForm) }}
+    {{ form_widget(registrationForm) }}
+    <button type="submit" class="btn">S'inscrire 🌸</button>
+{{ form_end(registrationForm) }}
+
+<p style="margin-top:20px;">
+    Déjà un compte ? <a href="{{ path('app_login') }}" class="back-link">Se connecter</a>
+</p>
+{% endblock %}

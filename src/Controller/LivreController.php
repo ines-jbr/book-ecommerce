@@ -4,15 +4,21 @@ namespace App\Controller;
 
 use App\Entity\Livre;
 use App\Form\LivreType;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use App\Repository\LivreRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class LivreController extends AbstractController
 {
+    #[Route('/', name: 'app_home')]
+    public function home(): Response
+    {
+        return $this->redirectToRoute('app_livre_index');
+    }
+
     #[Route('/livres', name: 'app_livre_index')]
     public function index(LivreRepository $livreRepository): Response
     {
@@ -22,6 +28,7 @@ class LivreController extends AbstractController
             'livres' => $livres,
         ]);
     }
+
     #[Route('/livre/nouveau', name: 'app_livre_new')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
