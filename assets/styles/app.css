@@ -291,3 +291,7 @@ form textarea {
     font-size: 1.2rem;
     color: var(--rose-gold);
 }
+a.book-card {
+    color: inherit;
+    text-decoration: none;
+}

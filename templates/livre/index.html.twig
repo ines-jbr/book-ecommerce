@@ -21,7 +21,7 @@
 {% else %}
     <div class="book-grid" id="book-grid">
         {% for livre in livres %}
-            <div class="book-card">
+            <a href="{{ path('app_livre_show', {id: livre.id}) }}" class="book-card">
                 <h3>{{ livre.titre }}</h3>
                 <p class="author">{{ livre.auteur }}</p>
                 <p class="price">{{ livre.prix }} €</p>
@@ -32,7 +32,7 @@
                         {{ livre.stock }} en stock
                     {% endif %}
                 </p>
-            </div>
+            </a>
         {% endfor %}
     </div>
 {% endif %}

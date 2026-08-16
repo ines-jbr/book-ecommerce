@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ livre.titre }}{% endblock %}
+
+{% block body %}
+<div class="book-detail">
+    <h1>{{ livre.titre }}</h1>
+    <p class="subtitle">{{ livre.auteur }}</p>
+
+    {% if livre.description %}
+        <p class="description">{{ livre.description }}</p>
+    {% endif %}
+
+    <p class="price">{{ livre.prix }} €</p>
+    <p class="stock {{ livre.stock == 0 ? 'out' : '' }}">
+        {% if livre.stock == 0 %}
+            Rupture de stock
+        {% else %}
+            {{ livre.stock }} en stock
+        {% endif %}
+    </p>
+
+    {% if app.user %}
+        <div class="actions">
+            <a href="{{ path('app_livre_edit', {id: livre.id}) }}" class="btn">Modifier</a>
+        </div>
+    {% endif %}
+</div>
+
+<a href="{{ path('app_livre_index') }}" class="back-link">← Retour au catalogue</a>
+{% endblock %}

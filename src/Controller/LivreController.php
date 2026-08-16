@@ -30,6 +30,13 @@ class LivreController extends AbstractController
             'livres' => $livres,
         ]);
     }
+    #[Route('/livre/{id}', name: 'app_livre_show')]
+    public function show(Livre $livre): Response
+    {
+        return $this->render('livre/show.html.twig', [
+            'livre' => $livre,
+        ]);
+    }
     #[Route('/livres/recherche', name: 'app_livre_search')]
     public function search(Request $request, LivreRepository $livreRepository): JsonResponse
     {
