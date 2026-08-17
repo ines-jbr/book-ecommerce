@@ -55,6 +55,17 @@ class LivreController extends AbstractController
             'livre' => $livre,
         ]);
     }
+    #[Route('/livre/{id}/supprimer', name: 'app_livre_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_VENDEUR')]
+    public function delete(Livre $livre, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $livre->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($livre);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_livre_index');
+    }
     #[Route('/livres/recherche', name: 'app_livre_search')]
     public function search(Request $request, LivreRepository $livreRepository): JsonResponse
     {

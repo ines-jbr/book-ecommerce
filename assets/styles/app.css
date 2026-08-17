@@ -126,6 +126,28 @@ h1 {
     transform: translateY(-2px);
     box-shadow: 0 10px 22px rgba(201, 162, 109, 0.5);
 }
+.btn-danger {
+    background: linear-gradient(120deg, #c0392b, #e74c3c);
+    box-shadow: 0 6px 16px rgba(192, 57, 43, 0.35);
+}
+.actions form {
+    max-width: none;
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+}
+
+.btn-danger:hover {
+    box-shadow: 0 10px 22px rgba(192, 57, 43, 0.45);
+}
+
+.actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
 
 .book-grid {
     display: grid;
