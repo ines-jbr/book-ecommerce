@@ -30,17 +30,21 @@ class LivreController extends AbstractController
             'livres' => $livres,
         ]);
     }
-    #[Route('/livre/{id}', name: 'app_livre_show')]
+    #[Route('/livre/{id}', name: 'app_livre_show', requirements: ['id' => '\d+'])]
     public function show(Livre $livre): Response
     {
         return $this->render('livre/show.html.twig', [
             'livre' => $livre,
         ]);
     }
-    #[Route('/livre/{id}/modifier', name: 'app_livre_edit')]
+    #[Route('/livre/{id}/modifier', name: 'app_livre_edit', requirements: ['id' => '\d+'])]
     #[IsGranted('ROLE_VENDEUR')]
     public function edit(Livre $livre, Request $request, EntityManagerInterface $entityManager): Response
     {
+        if ($livre->getVendeur() !== $this->getUser()) {
+            throw $this->createAccessDeniedException('Vous ne pouvez modifier que vos propres livres.');
+        }
+
         $form = $this->createForm(LivreType::class, $livre);
         $form->handleRequest($request);
 
@@ -55,10 +59,15 @@ class LivreController extends AbstractController
             'livre' => $livre,
         ]);
     }
-    #[Route('/livre/{id}/supprimer', name: 'app_livre_delete', methods: ['POST'])]
+
+    #[Route('/livre/{id}/supprimer', name: 'app_livre_delete', requirements: ['id' => '\d+'], methods: ['POST'])]
     #[IsGranted('ROLE_VENDEUR')]
     public function delete(Livre $livre, Request $request, EntityManagerInterface $entityManager): Response
     {
+        if ($livre->getVendeur() !== $this->getUser()) {
+            throw $this->createAccessDeniedException('Vous ne pouvez supprimer que vos propres livres.');
+        }
+
         if ($this->isCsrfTokenValid('delete' . $livre->getId(), $request->request->get('_token'))) {
             $entityManager->remove($livre);
             $entityManager->flush();
@@ -96,8 +105,9 @@ class LivreController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $livre = new Livre();
-        $form = $this->createForm(LivreType::class, $livre);
+        $livre->setVendeur($this->getUser());
 
+        $form = $this->createForm(LivreType::class, $livre);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

@@ -20,15 +20,15 @@
         {% endif %}
     </p>
 
-    {% if is_granted('ROLE_VENDEUR') %}
-        <div class="actions">
-            <a href="{{ path('app_livre_edit', {id: livre.id}) }}" class="btn">Modifier</a>
-            <form method="post" action="{{ path('app_livre_delete', {id: livre.id}) }}" onsubmit="return confirm('Supprimer ce livre définitivement ?');" style="display:inline;">
-                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ livre.id) }}">
-                <button type="submit" class="btn btn-danger">Supprimer</button>
-            </form>
-        </div>
-    {% endif %}
+    {% if livre.vendeur == app.user %}
+    <div class="actions">
+        <a href="{{ path('app_livre_edit', {id: livre.id}) }}" class="btn">Modifier</a>
+        <form method="post" action="{{ path('app_livre_delete', {id: livre.id}) }}" onsubmit="return confirm('Supprimer ce livre définitivement ?');" style="display:inline;">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ livre.id) }}">
+            <button type="submit" class="btn btn-danger">Supprimer</button>
+        </form>
+    </div>
+{% endif %}
 </div>
 
 <a href="{{ path('app_livre_index') }}" class="back-link">← Retour au catalogue</a>
