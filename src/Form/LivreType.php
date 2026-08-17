@@ -2,6 +2,8 @@
 
 namespace App\Form;
 
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Validator\Constraints\File;
 use App\Entity\Livre;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -22,8 +24,21 @@ class LivreType extends AbstractType
             ])
             ->add('prix', NumberType::class)
             ->add('stock')
-            ->add('image', TextType::class, [
+            ->add('imageFile', FileType::class, [
+                'label' => 'Couverture du livre',
+                'mapped' => false,
                 'required' => false,
+                'constraints' => [
+                     new File(
+                        maxSize: '2M',
+                        mimeTypes: [
+                            'image/jpeg',
+                            'image/png',
+                            'image/webp',
+                        ],
+                        mimeTypesMessage: 'Merci de choisir une image valide (JPEG, PNG ou WebP).',
+                    )
+                ],
             ])
         ;
     }
