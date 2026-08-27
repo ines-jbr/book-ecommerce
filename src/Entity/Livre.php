@@ -36,6 +36,9 @@ class Livre
     #[ORM\JoinColumn(nullable: false)]
     private ?User $vendeur = null;
 
+    #[ORM\ManyToOne(inversedBy: 'livres')]
+    private ?Categorie $categorie = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -121,6 +124,18 @@ class Livre
     public function setVendeur(?User $vendeur): static
     {
         $this->vendeur = $vendeur;
+
+        return $this;
+    }
+
+    public function getCategorie(): ?Categorie
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?Categorie $categorie): static
+    {
+        $this->categorie = $categorie;
 
         return $this;
     }
