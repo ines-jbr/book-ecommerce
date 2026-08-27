@@ -4,31 +4,41 @@
 
 {% block body %}
 <div class="book-detail">
-    <h1>{{ livre.titre }}</h1>
-    <p class="subtitle">{{ livre.auteur }}</p>
-
-    {% if livre.description %}
-        <p class="description">{{ livre.description }}</p>
-    {% endif %}
-
-    <p class="price">{{ livre.prix }} €</p>
-    <p class="stock {{ livre.stock == 0 ? 'out' : '' }}">
-        {% if livre.stock == 0 %}
-            Rupture de stock
+    <div class="book-detail-cover">
+        {% if livre.image %}
+            <img src="{{ asset('uploads/livres/' ~ livre.image) }}" alt="Couverture de {{ livre.titre }}">
         {% else %}
-            {{ livre.stock }} en stock
+            <div class="no-cover-large">📖</div>
         {% endif %}
-    </p>
-
-    {% if livre.vendeur == app.user %}
-    <div class="actions">
-        <a href="{{ path('app_livre_edit', {id: livre.id}) }}" class="btn">Modifier</a>
-        <form method="post" action="{{ path('app_livre_delete', {id: livre.id}) }}" onsubmit="return confirm('Supprimer ce livre définitivement ?');" style="display:inline;">
-            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ livre.id) }}">
-            <button type="submit" class="btn btn-danger">Supprimer</button>
-        </form>
     </div>
-{% endif %}
+
+    <div class="book-detail-info">
+        <h1>{{ livre.titre }}</h1>
+        <p class="subtitle">{{ livre.auteur }}</p>
+
+        {% if livre.description %}
+            <p class="description">{{ livre.description }}</p>
+        {% endif %}
+
+        <p class="price">{{ livre.prix }} €</p>
+        <p class="stock {{ livre.stock == 0 ? 'out' : '' }}">
+            {% if livre.stock == 0 %}
+                Rupture de stock
+            {% else %}
+                {{ livre.stock }} en stock
+            {% endif %}
+        </p>
+
+        {% if livre.vendeur == app.user %}
+            <div class="actions">
+                <a href="{{ path('app_livre_edit', {id: livre.id}) }}" class="btn">Modifier</a>
+                <form method="post" action="{{ path('app_livre_delete', {id: livre.id}) }}" onsubmit="return confirm('Supprimer ce livre définitivement ?');" style="display:inline;">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ livre.id) }}">
+                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                </form>
+            </div>
+        {% endif %}
+    </div>
 </div>
 
 <a href="{{ path('app_livre_index') }}" class="back-link">← Retour au catalogue</a>

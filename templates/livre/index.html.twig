@@ -22,6 +22,13 @@
     <div class="book-grid" id="book-grid">
         {% for livre in livres %}
             <a href="{{ path('app_livre_show', {id: livre.id}) }}" class="book-card">
+                <div class="book-cover">
+                    {% if livre.image %}
+                        <img src="{{ asset('uploads/livres/' ~ livre.image) }}" alt="Couverture de {{ livre.titre }}">
+                    {% else %}
+                        <div class="no-cover">📖</div>
+                    {% endif %}
+                </div>
                 <h3>{{ livre.titre }}</h3>
                 <p class="author">{{ livre.auteur }}</p>
                 <p class="price">{{ livre.prix }} €</p>
