@@ -44,7 +44,7 @@ class LivreController extends AbstractController
     }
     #[Route('/livre/{id}/modifier', name: 'app_livre_edit', requirements: ['id' => '\d+'])]
     #[IsGranted('ROLE_VENDEUR')]
-    public function edit(Livre $livre, Request $request, EntityManagerInterface $entityManager): Response
+    public function edit(Livre $livre, Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
     {
         if ($livre->getVendeur() !== $this->getUser()) {
             throw $this->createAccessDeniedException('Vous ne pouvez modifier que vos propres livres.');
@@ -54,6 +54,36 @@ class LivreController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $imageFile */
+            $imageFile = $form->get('imageFile')->getData();
+
+            if ($imageFile) {
+                // Supprimer l'ancienne image si elle existe, pour ne pas accumuler des fichiers inutiles
+                $ancienneImage = $livre->getImage();
+                if ($ancienneImage) {
+                    $ancienCheminComplet = $this->getParameter('livres_images_directory') . '/' . $ancienneImage;
+                    if (file_exists($ancienCheminComplet)) {
+                        unlink($ancienCheminComplet);
+                    }
+                }
+
+                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+
+                try {
+                    $imageFile->move(
+                        $this->getParameter('livres_images_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    $this->addFlash('error', 'Erreur lors du téléchargement de l\'image.');
+                }
+
+                $livre->setImage($newFilename);
+            }
+            // Si aucun nouveau fichier n'est envoyé, $livre->getImage() garde sa valeur actuelle automatiquement
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_livre_show', ['id' => $livre->getId()]);

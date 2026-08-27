@@ -6,6 +6,13 @@
 <h1>Modifier le livre</h1>
 <p class="subtitle">{{ livre.titre }}</p>
 
+{% if livre.image %}
+    <div class="current-cover">
+        <p class="current-cover-label">Couverture actuelle :</p>
+        <img src="{{ asset('uploads/livres/' ~ livre.image) }}" alt="Couverture actuelle">
+    </div>
+{% endif %}
+
 {{ form_start(form) }}
     {{ form_widget(form) }}
     <button type="submit" class="btn">Enregistrer les modifications 🌸</button>

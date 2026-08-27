@@ -268,6 +268,25 @@ h1 {
     line-height: 1.8;
 }
 
+.current-cover {
+    margin-bottom: 24px;
+}
+
+.current-cover-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.current-cover img {
+    width: 140px;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: var(--shadow-soft);
+    display: block;
+}
+
 .book-card:hover {
     transform: translateY(-5px);
     box-shadow: var(--shadow-hover);
