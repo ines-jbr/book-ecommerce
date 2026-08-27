@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
-
+use App\Repository\CategorieRepository;
 
 
 class LivreController extends AbstractController
@@ -27,12 +27,22 @@ class LivreController extends AbstractController
     }
 
     #[Route('/livres', name: 'app_livre_index')]
-    public function index(LivreRepository $livreRepository): Response
+    public function index(Request $request, LivreRepository $livreRepository, CategorieRepository $categorieRepository): Response
     {
-        $livres = $livreRepository->findAll();
+        $categorieId = $request->query->get('categorie');
+
+        if ($categorieId) {
+            $livres = $livreRepository->findBy(['categorie' => $categorieId]);
+        } else {
+            $livres = $livreRepository->findAll();
+        }
+
+        $categories = $categorieRepository->findAll();
 
         return $this->render('livre/index.html.twig', [
             'livres' => $livres,
+            'categories' => $categories,
+            'categorieActive' => $categorieId,
         ]);
     }
     #[Route('/livre/{id}', name: 'app_livre_show', requirements: ['id' => '\d+'])]

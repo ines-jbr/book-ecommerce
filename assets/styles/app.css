@@ -422,3 +422,33 @@ a.book-card {
     border-radius: 999px;
     margin-bottom: 10px;
 }
+.category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 28px;
+}
+
+.filter-tag {
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 999px;
+    background: #fff;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 1.5px solid var(--pink-pale);
+    transition: all 0.2s;
+}
+
+.filter-tag:hover {
+    border-color: var(--pink-soft);
+    color: var(--pink-deep);
+}
+
+.filter-tag.active {
+    background: var(--pink-deep);
+    color: #fff;
+    border-color: var(--pink-deep);
+}

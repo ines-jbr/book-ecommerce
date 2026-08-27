@@ -10,6 +10,17 @@
     <input type="text" id="search-input" placeholder="Rechercher un titre ou un auteur...">
 </div>
 
+<div class="category-filters">
+    <a href="{{ path('app_livre_index') }}" class="filter-tag {{ categorieActive is null ? 'active' : '' }}">
+        Tous
+    </a>
+    {% for categorie in categories %}
+        <a href="{{ path('app_livre_index', {categorie: categorie.id}) }}" class="filter-tag {{ categorieActive == categorie.id ? 'active' : '' }}">
+            {{ categorie.nom }}
+        </a>
+    {% endfor %}
+</div>
+
 {% if is_granted('ROLE_VENDEUR') %}
     <a href="{{ path('app_livre_new') }}" class="btn">+ Ajouter un livre</a>
 {% endif %}
