@@ -15,6 +15,9 @@
     <div class="book-detail-info">
         <h1>{{ livre.titre }}</h1>
         <p class="subtitle">{{ livre.auteur }}</p>
+        {% if livre.categorie %}
+            <p class="category-tag">{{ livre.categorie.nom }}</p>
+        {% endif %}
 
         {% if livre.description %}
             <p class="description">{{ livre.description }}</p>

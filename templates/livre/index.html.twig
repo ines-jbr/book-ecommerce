@@ -31,6 +31,9 @@
                 </div>
                 <h3>{{ livre.titre }}</h3>
                 <p class="author">{{ livre.auteur }}</p>
+                {% if livre.categorie %}
+                    <p class="category-tag">{{ livre.categorie.nom }}</p>
+                {% endif %}
                 <p class="price">{{ livre.prix }} €</p>
                 <p class="stock {{ livre.stock == 0 ? 'out' : '' }}">
                     {% if livre.stock == 0 %}

@@ -11,6 +11,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Entity\Categorie;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 
 class LivreType extends AbstractType
 {
@@ -19,6 +22,13 @@ class LivreType extends AbstractType
         $builder
             ->add('titre', TextType::class)
             ->add('auteur', TextType::class)
+            ->add('categorie', EntityType::class, [
+                'class' => Categorie::class,
+                'choice_label' => 'nom',
+                'label' => 'Catégorie',
+                'required' => false,
+                'placeholder' => 'Choisir une catégorie...',
+            ])
             ->add('description', TextareaType::class, [
                 'required' => false,
             ])
