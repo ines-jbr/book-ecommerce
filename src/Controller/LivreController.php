@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use App\Repository\CategorieRepository;
+use App\Service\Panier;
 
 
 class LivreController extends AbstractController
@@ -51,6 +52,16 @@ class LivreController extends AbstractController
         return $this->render('livre/show.html.twig', [
             'livre' => $livre,
         ]);
+    }
+    #[Route('/livre/{id}/ajouter-panier', name: 'app_livre_ajouter_panier', requirements: ['id' => '\d+'], methods: ['POST'])]
+    #[IsGranted('ROLE_USER')]
+    public function ajouterAuPanier(Livre $livre, Panier $panier): Response
+    {
+        $panier->ajouter($livre->getId());
+
+        $this->addFlash('success', $livre->getTitre() . ' a été ajouté au panier.');
+
+        return $this->redirectToRoute('app_livre_show', ['id' => $livre->getId()]);
     }
     #[Route('/livre/{id}/modifier', name: 'app_livre_edit', requirements: ['id' => '\d+'])]
     #[IsGranted('ROLE_VENDEUR')]

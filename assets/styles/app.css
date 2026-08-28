@@ -139,6 +139,17 @@ h1 {
     border: none;
 }
 
+.book-detail-info form {
+    max-width: none;
+    background: none;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+    display: inline-block;
+    margin-bottom: 16px;
+}
+
 .btn-danger:hover {
     box-shadow: 0 10px 22px rgba(192, 57, 43, 0.45);
 }
@@ -451,4 +462,13 @@ a.book-card {
     background: var(--pink-deep);
     color: #fff;
     border-color: var(--pink-deep);
+}
+.flash-success {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border: 1.5px solid #a5d6a7;
+    padding: 14px 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    font-weight: 600;
 }

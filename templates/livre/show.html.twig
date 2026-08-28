@@ -32,6 +32,14 @@
             {% endif %}
         </p>
 
+        {% if app.user and livre.stock > 0 %}
+            <form method="post" action="{{ path('app_livre_ajouter_panier', {id: livre.id}) }}" style="display:inline;">
+                <button type="submit" class="btn">🛒 Ajouter au panier</button>
+            </form>
+        {% elseif livre.stock == 0 %}
+            <p style="color: var(--text-muted); font-style: italic;">Indisponible pour le moment</p>
+        {% endif %}
+
         {% if livre.vendeur == app.user %}
             <div class="actions">
                 <a href="{{ path('app_livre_edit', {id: livre.id}) }}" class="btn">Modifier</a>
