@@ -11,6 +11,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Entity\Commande;
 use App\Entity\LigneCommande;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\CommandeRepository;
 
 class PanierController extends AbstractController
 {
@@ -100,5 +101,18 @@ class PanierController extends AbstractController
         $panier->retirer($id);
 
         return $this->redirectToRoute('app_panier_index');
+    }
+        #[Route('/mes-commandes', name: 'app_commande_index')]
+    #[IsGranted('ROLE_USER')]
+    public function mesCommandes(CommandeRepository $commandeRepository): Response
+    {
+        $commandes = $commandeRepository->findBy(
+            ['client' => $this->getUser()],
+            ['dateCommande' => 'DESC']
+        );
+
+        return $this->render('panier/mes_commandes.html.twig', [
+            'commandes' => $commandes,
+        ]);
     }
 }

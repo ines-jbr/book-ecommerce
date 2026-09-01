@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes commandes{% endblock %}
+
+{% block body %}
+<h1>Mes commandes</h1>
+<p class="subtitle">l'historique de vos achats</p>
+
+{% if commandes is empty %}
+    <div class="empty-state">
+        <p>📦 Vous n'avez pas encore passé de commande.</p>
+        <a href="{{ path('app_livre_index') }}" class="btn">Découvrir le catalogue</a>
+    </div>
+{% else %}
+    <div class="commandes-liste">
+        {% for commande in commandes %}
+            <a href="{{ path('app_commande_show', {id: commande.id}) }}" class="commande-card">
+                <div>
+                    <h3>Commande #{{ commande.id }}</h3>
+                    <p class="author">{{ commande.dateCommande|date('d/m/Y à H:i') }}</p>
+                </div>
+                <div class="commande-card-right">
+                    <p class="commande-statut">{{ commande.statut }}</p>
+                    <p class="price">{{ commande.total }} €</p>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}

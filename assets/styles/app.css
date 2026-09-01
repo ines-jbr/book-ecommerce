@@ -624,3 +624,46 @@ a.book-card {
     border: none;
     display: inline-block;
 }
+.commandes-liste {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.commande-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 18px 24px;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid var(--pink-pale);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.commande-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+}
+
+.commande-card h3 {
+    margin: 0 0 4px;
+    font-size: 1.05rem;
+}
+
+.commande-card-right {
+    text-align: right;
+}
+
+.commande-statut {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    background: var(--pink-pale);
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    margin-bottom: 6px;
+}

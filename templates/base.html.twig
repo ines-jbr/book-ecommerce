@@ -24,6 +24,7 @@
                         <a href="{{ path('app_livre_new') }}">Ajouter un livre</a>
                     {% endif %}
                     <a href="{{ path('app_panier_index') }}">🛒 Panier</a>
+                    <a href="{{ path('app_commande_index') }}">Mes commandes</a>
                     <a href="{{ path('app_logout') }}">Déconnexion ({{ app.user.email }})</a>
                 {% else %}
                     <a href="{{ path('app_login') }}">Connexion</a>
