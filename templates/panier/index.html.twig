@@ -53,7 +53,9 @@
 
     <div class="panier-total">
         <p>Total : <strong>{{ total }} €</strong></p>
-        <a href="#" class="btn">Passer la commande</a>
+        <form method="post" action="{{ path('app_panier_valider') }}" style="display:inline;">
+            <button type="submit" class="btn">Passer la commande</button>
+        </form>
     </div>
 {% endif %}
 {% endblock %}

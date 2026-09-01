@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande #{{ commande.id }}{% endblock %}
+
+{% block body %}
+<h1>Merci pour votre commande ! 🌸</h1>
+<p class="subtitle">Commande #{{ commande.id }} — {{ commande.dateCommande|date('d/m/Y à H:i') }}</p>
+
+<div class="panier-lignes">
+    {% for ligne in commande.lignes %}
+        <div class="panier-ligne">
+            <div class="panier-ligne-cover">
+                {% if ligne.livre and ligne.livre.image %}
+                    <img src="{{ asset('uploads/livres/' ~ ligne.livre.image) }}" alt="Couverture">
+                {% else %}
+                    <div class="no-cover">📖</div>
+                {% endif %}
+            </div>
+
+            <div class="panier-ligne-info">
+                <h3>{{ ligne.livre ? ligne.livre.titre : 'Livre supprimé' }}</h3>
+                <p class="price">{{ ligne.prixUnitaire }} € / unité</p>
+            </div>
+
+            <p>Quantité : {{ ligne.quantite }}</p>
+            <p class="panier-sous-total">{{ (ligne.prixUnitaire * ligne.quantite) }} €</p>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="panier-total">
+    <p>Total payé : <strong>{{ commande.total }} €</strong></p>
+    <p>Statut : <strong>{{ commande.statut }}</strong></p>
+</div>
+
+<br>
+<a href="{{ path('app_livre_index') }}" class="back-link">← Retour au catalogue</a>
+{% endblock %}
